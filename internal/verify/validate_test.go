@@ -176,8 +176,8 @@ func TestValidOrganizationalUnitID(t *testing.T) {
 	}
 
 	invalidNames := []string{
-		"ou-aze-12a",               // too short
-		"ou-1234aze-azerty1234567", // too long
+		"ou-aze-12a", // too short
+		"ou-mdeuhlrtorezmxmf0c5k9x84zmy5yvxrb-azerty1234567", // too long
 		"invalid",
 		"o-1234-azerty1234567",
 	}
