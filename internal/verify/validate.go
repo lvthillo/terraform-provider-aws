@@ -66,6 +66,34 @@ func ValidAccountID(v interface{}, k string) (ws []string, errors []error) {
 	return
 }
 
+func ValidOrganizationID(v interface{}, k string) (ws []string, errors []error) {
+	value := v.(string)
+
+	// https://docs.aws.amazon.com/organizations/latest/APIReference/API_Organization.html
+	pattern := `^o-[a-z0-9]{10,32}$`
+	if !regexp.MustCompile(pattern).MatchString(value) {
+		errors = append(errors, fmt.Errorf(
+			"%q doesn't look like AWS Organization ID: %q",
+			k, value))
+	}
+
+	return
+}
+
+func ValidOrganizationalUnitID(v interface{}, k string) (ws []string, errors []error) {
+	value := v.(string)
+
+	// https://docs.aws.amazon.com/organizations/latest/APIReference/API_OrganizationalUnit.html
+	pattern := `^ou-[0-9a-z]{4,32}-[a-z0-9]{8,32}$`
+	if !regexp.MustCompile(pattern).MatchString(value) {
+		errors = append(errors, fmt.Errorf(
+			"%q doesn't look like AWS OrganizationalUnit ID: %q",
+			k, value))
+	}
+
+	return
+}
+
 // validateCIDRBlock validates that the specified CIDR block is valid:
 // - The CIDR block parses to an IP address and network
 // - The CIDR block is the CIDR block for the network

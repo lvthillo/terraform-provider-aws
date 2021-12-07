@@ -704,6 +704,46 @@ resource "aws_imagebuilder_distribution_configuration" "test" {
 `, rName, userId)
 }
 
+func testAccDistributionConfigurationDistributionAMIDistributionConfigurationLaunchPermissionOrganizationArnsConfig(rName string, organizationArn string) string {
+	return fmt.Sprintf(`
+data "aws_region" "current" {}
+
+resource "aws_imagebuilder_distribution_configuration" "test" {
+  name = %[1]q
+
+  distribution {
+    ami_distribution_configuration {
+      launch_permission {
+        organization_arns = [%[2]q]
+      }
+    }
+
+    region = data.aws_region.current.name
+  }
+}
+`, rName, organizationArn)
+}
+
+func testAccDistributionConfigurationDistributionAMIDistributionConfigurationLaunchPermissionOrganizationalUnitArnsConfig(rName string, organizationalUnitArn string) string {
+	return fmt.Sprintf(`
+data "aws_region" "current" {}
+
+resource "aws_imagebuilder_distribution_configuration" "test" {
+  name = %[1]q
+
+  distribution {
+    ami_distribution_configuration {
+      launch_permission {
+        organizational_unit_arns = [%[2]q]
+      }
+    }
+
+    region = data.aws_region.current.name
+  }
+}
+`, rName, organizationalUnitArn)
+}
+
 func testAccDistributionConfigurationDistributionAMIDistributionConfigurationNameConfig(rName string, name string) string {
 	return fmt.Sprintf(`
 data "aws_region" "current" {}

@@ -89,6 +89,22 @@ func ResourceDistributionConfiguration() *schema.Resource {
 														ValidateFunc: verify.ValidAccountID,
 													},
 												},
+												"organization_arns": {
+													Type:     schema.TypeSet,
+													Optional: true,
+													Elem: &schema.Schema{
+														Type:         schema.TypeString,
+														ValidateFunc: verify.ValidOrganizationID,
+													},
+												},
+												"organizational_unit_arns": {
+													Type:     schema.TypeSet,
+													Optional: true,
+													Elem: &schema.Schema{
+														Type:         schema.TypeString,
+														ValidateFunc: verify.ValidOrganizationalUnitID,
+													},
+												},
 											},
 										},
 									},
