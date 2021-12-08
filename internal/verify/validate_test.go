@@ -137,52 +137,52 @@ func TestValidAccountID(t *testing.T) {
 	}
 }
 
-func TestValidOrganizationID(t *testing.T) {
+func TestValidOrganizationArn(t *testing.T) {
 	validNames := []string{
-		"o-aze123rty456",
-		"o-123aze456rty780uio",
+		"arn:aws:organizations::111111111111:o-aze123rty456",
+		"arn:aws:organizations::111111111111:o-123aze456rty780uio",
 	}
 	for _, v := range validNames {
-		_, errors := ValidOrganizationID(v, "organization_id")
+		_, errors := ValidOrganizationArn(v, "organization_id")
 		if len(errors) != 0 {
 			t.Fatalf("%q should be a valid AWS Organization ID: %q", v, errors)
 		}
 	}
 
 	invalidNames := []string{
-		"o-aze123rty", // too short
-		"o-123aze456rty780uio123aze456rty780uio123", // too long
+		"arn:aws:organizations::111111111111:o-aze123rty",                               // too short
+		"arn:aws:organizations::111111111111:o-123aze456rty780uio123aze456rty780uio123", // too long
 		"invalid",
-		"123aze456rty780uio",
+		"arn:aws:organizations::111111111111:123aze456rty780uio",
 	}
 	for _, v := range invalidNames {
-		_, errors := ValidOrganizationID(v, "organization_id")
+		_, errors := ValidOrganizationArn(v, "organization_id")
 		if len(errors) == 0 {
 			t.Fatalf("%q should be an invalid AWS Organization ID", v)
 		}
 	}
 }
 
-func TestValidOrganizationalUnitID(t *testing.T) {
+func TestValidOrganizationalUnitArn(t *testing.T) {
 	validNames := []string{
-		"ou-azer-12aefd983dz",
-		"ou-1234-azerty1234567",
+		"arn:aws:organizations::111111111111:ou/o-aze123rty456/ou-azer-12aefd983dz",
+		"arn:aws:organizations::111111111111:ou/o-aze123rty456/ou-1234-azerty1234567",
 	}
 	for _, v := range validNames {
-		_, errors := ValidOrganizationalUnitID(v, "organizational_unit_id")
+		_, errors := ValidOrganizationalUnitArn(v, "organizational_unit_id")
 		if len(errors) != 0 {
 			t.Fatalf("%q should be a valid AWS Organizational Unit ID: %q", v, errors)
 		}
 	}
 
 	invalidNames := []string{
-		"ou-aze-12a", // too short
-		"ou-mdeuhlrtorezmxmf0c5k9x84zmy5yvxrb-azerty1234567", // too long
+		"arn:aws:organizations::111111111111:ou/o-aze123rty456/ou-aze-12a",                                         // too short
+		"arn:aws:organizations::111111111111:ou/o-aze123rty456/ou-mdeuhlrtorezmxmf0c5k9x84zmy5yvxrb-azerty1234567", // too long
 		"invalid",
-		"o-1234-azerty1234567",
+		"arn:aws:organizations::111111111111:ou/o-aze123rty456/ou-1234-azerty1234567",
 	}
 	for _, v := range invalidNames {
-		_, errors := ValidOrganizationalUnitID(v, "organizational_unit_id")
+		_, errors := ValidOrganizationalUnitArn(v, "organizational_unit_id")
 		if len(errors) == 0 {
 			t.Fatalf("%q should be an invalid AWS Organizational Unit ID", v)
 		}

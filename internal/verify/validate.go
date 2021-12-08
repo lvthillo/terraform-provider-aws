@@ -66,28 +66,28 @@ func ValidAccountID(v interface{}, k string) (ws []string, errors []error) {
 	return
 }
 
-func ValidOrganizationID(v interface{}, k string) (ws []string, errors []error) {
+func ValidOrganizationArn(v interface{}, k string) (ws []string, errors []error) {
 	value := v.(string)
 
-	// https://docs.aws.amazon.com/organizations/latest/APIReference/API_Organization.html
-	pattern := `^o-[a-z0-9]{10,32}$`
+	// https://docs.aws.amazon.com/imagebuilder/latest/APIReference/API_LaunchPermissionConfiguration.html
+	pattern := `^arn:aws[^:]*:organizations::[0-9]{12}:organization/o-[a-z0-9]{10,32}$`
 	if !regexp.MustCompile(pattern).MatchString(value) {
 		errors = append(errors, fmt.Errorf(
-			"%q doesn't look like AWS Organization ID: %q",
+			"%q doesn't look like AWS Organization Arn: %q",
 			k, value))
 	}
 
 	return
 }
 
-func ValidOrganizationalUnitID(v interface{}, k string) (ws []string, errors []error) {
+func ValidOrganizationalUnitArn(v interface{}, k string) (ws []string, errors []error) {
 	value := v.(string)
 
-	// https://docs.aws.amazon.com/organizations/latest/APIReference/API_OrganizationalUnit.html
-	pattern := `^ou-[0-9a-z]{4,32}-[a-z0-9]{8,32}$`
+	// https://docs.aws.amazon.com/imagebuilder/latest/APIReference/API_LaunchPermissionConfiguration.html
+	pattern := `^arn:aws[^:]*:organizations::[0-9]{12}:ou/o-[a-z0-9]{10,32}/ou-[0-9a-z]{4,32}-[0-9a-z]{8,32}`
 	if !regexp.MustCompile(pattern).MatchString(value) {
 		errors = append(errors, fmt.Errorf(
-			"%q doesn't look like AWS OrganizationalUnit ID: %q",
+			"%q doesn't look like AWS OrganizationalUnit Arn: %q",
 			k, value))
 	}
 
